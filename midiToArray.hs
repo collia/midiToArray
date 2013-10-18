@@ -21,15 +21,8 @@ import Data.Ratio
 import qualified Data.Text                              as Text
 
 import System.Environment                   
---import System.Exit
---import Control.Monad
 import Data.Char
---import Data.List
---import System.Console.GetOpt
---import System.Environment
---import System.Exit
 import System.IO
---import Text.Printf
 import System.Console.GetOpt
 import Data.Maybe ( fromMaybe )
 
