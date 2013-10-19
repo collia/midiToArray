@@ -128,7 +128,7 @@ generateCHeaderElement line (delay, freq, note) = line ++
 
 generateCHeaderElems :: [NotesArrayElem] -> String
 generateCHeaderElems [] = ""
-generateCHeaderElems a = foldl generateCHeaderElement "" (take 5 a) ++ "\n" ++
+generateCHeaderElems a = foldl generateCHeaderElement "" (take 5 a) ++ "\\\n" ++
                               generateCHeaderElems (drop 5 a)
 
 
@@ -139,7 +139,7 @@ generateCHeader name a = Text.concat([
                     "// if freq == 0 - this meaning note off \n" ++
                   "#define " ),
                   Text.toUpper $ Text.replace (Text.pack(".")) (Text.pack("_")) $ Text.pack(name),
-                  Text.pack(" = { \n" ++ generateCHeaderElems a ++ "}\n")]);
+                  Text.pack("  { \\\n" ++ generateCHeaderElems a ++ "}\n")]);
 
 
 
@@ -183,6 +183,12 @@ generateCFile midifile = do
                                    (evalState (parseMIDIFile y ) (500000,120,0)))
 
 doGenerateCFile :: [String] -> String -> IO()
+doGenerateCFile midifiles "stdout" = do
+                                     z <-  (sequence (map
+                                                generateCFile
+                                                midifiles))
+                                     putStr (concat z)
+                                     return ()
 doGenerateCFile midifiles filename = do
                                      z <-  (sequence (map
                                                 generateCFile
@@ -198,6 +204,12 @@ generateTFile midifile = do
                                        (evalState (parseMIDIFile y) (500000,120,0)))
 
 doGenerateTFile :: [String] -> String -> IO()
+doGenerateTFile midifiles "stdout" = do
+                                     z <-  (sequence (map
+                                                generateTFile
+                                                midifiles))
+                                     putStr (concat z)
+                                     return ()         
 doGenerateTFile midifiles filename = do
                                      z <-  (sequence (map
                                                 generateTFile
