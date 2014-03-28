@@ -6,9 +6,9 @@ Tool which convert midi file in C array
 Compilation
 ===========
 
-`cabal configure`
+cabal configure
 
-`cabal build`
+cabal build
 
 Dependency
 ==========
