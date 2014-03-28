@@ -6,7 +6,8 @@ Tool which convert midi file in C array
 Compilation
 ===========
 
-ghc midiToArray.hs -o midiToArray
+cabal configure
+cabal build
 
 Dependency
 ==========
